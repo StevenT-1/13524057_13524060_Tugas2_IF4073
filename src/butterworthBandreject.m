@@ -1,6 +1,12 @@
-function out = butterworthBandreject(imgf, D0, W, n)
-    D = getD(imgf);
-    H = 1./(1 + ((D*W)./(D.^2 - D0^2)).^(2*n));
-    H = fftshift(H);
-    out = H.*imgf;
+function out = butterworthBandreject(img, D0, W, n)
+    [w, h, num_ch] = size(img);
+    out = zeros(w, h, num_ch);
+    for c = 1:num_ch
+        imgf = fft2(im2double(img(:,:,c)));
+        imgf = fftshift(imgf);
+        G = butterworthBandrejectF(imgf, D0, W, n);
+        out(:,:,c) = real(ifft2(G));
+    end
+    out = im2uint8(out);
 end
+

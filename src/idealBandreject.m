@@ -1,16 +1,12 @@
-function out = idealBandreject(imgf, D0, W)
-    D = getD(imgf);
-    [u, v] = size(D);
-    H = zeros(u, v);
-    for i = 1:u
-        for j = 1:v
-            if (D(i, j) < D0 - W/2) || (D(i, j) > D0 + W/2)
-                H(i,j) = 1;
-            else
-                H(i,j) = 0;
-            end
-        end
+function out = idealBandreject(img, D0, W)
+    [w, h, num_ch] = size(img);
+    out = zeros(w, h, num_ch);
+    for c = 1:num_ch
+        imgf = fft2(im2double(img(:,:,c)));
+        imgf = fftshift(imgf);
+        G = idealBandrejectF(imgf, D0, W);
+        out(:,:,c) = real(ifft2(G));
     end
-    H = fftshift(H);
-    out = H.*imgf;
+    out = im2uint8(out);
 end
+
