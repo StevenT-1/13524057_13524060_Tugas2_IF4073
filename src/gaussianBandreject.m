@@ -5,7 +5,7 @@ function out = gaussianBandreject(img, D0, W)
         imgf = fft2(im2double(img(:,:,c)));
         imgf = fftshift(imgf);
         G = gaussianBandrejectF(imgf, D0, W);
-        out(:,:,c) = real(ifft2(G));
+        out(:,:,c) = real(ifft2(ifftshift(G)));
     end
     out = im2uint8(out);
 end

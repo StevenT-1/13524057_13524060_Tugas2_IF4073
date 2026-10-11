@@ -5,7 +5,7 @@ function out = butterworthBandreject(img, D0, W, n)
         imgf = fft2(im2double(img(:,:,c)));
         imgf = fftshift(imgf);
         G = butterworthBandrejectF(imgf, D0, W, n);
-        out(:,:,c) = real(ifft2(G));
+        out(:,:,c) = real(ifft2(ifftshift(G)));
     end
     out = im2uint8(out);
 end

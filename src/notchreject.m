@@ -5,7 +5,7 @@ function out = notchreject(img, notches)
         imgf = fft2(im2double(img(:,:,c)));
         imgf = fftshift(imgf);
         G = notchrejectF(imgf, notches);
-        out(:,:,c) = real(ifft2(G));
+        out(:,:,c) = real(ifft2(ifftshift(G)));
     end
     out = im2uint8(out);
 end
