@@ -1,6 +1,4 @@
 function out = wienerMotionFilter(img, H, K)
-    
-
     imgF = im2double(img);
     [row, col, num_ch] = size(imgF);
 
