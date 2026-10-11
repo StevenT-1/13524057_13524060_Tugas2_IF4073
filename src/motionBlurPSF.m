@@ -8,7 +8,7 @@ function H = motionBlurPSF(row, col, LEN, THETA, T)
     end
 
     dx = LEN * cosd(THETA);
-    dy = -LEN * sind(THETA);
+    dy = LEN * sind(THETA);
 
     a = dx / col;
     b = dy / row;
@@ -23,7 +23,7 @@ function H = motionBlurPSF(row, col, LEN, THETA, T)
 
     nonzero = abs(s) > 1e-12;
 
-    H(nonzero) = T * sin(pi*s(nonzero)) ./ (pi*s(nonzero)) .* exp(-1i*pi*s(nonzero));
+    H(nonzero) = T * sin(pi*s(nonzero)) ./ (pi*s(nonzero));
 
     H = ifftshift(H);
 end
